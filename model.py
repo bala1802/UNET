@@ -8,7 +8,6 @@ in each block two 3x3 convultional block is used
 '''
 class DoubleConv(nn.Module):
 
-
     def __init__(self, in_channels, out_channels):
         super(DoubleConv, self).__init__()
 
@@ -28,3 +27,22 @@ class DoubleConv(nn.Module):
     
     def forward(self, x):
         return self.conv(x)
+    
+class UNET(nn.Module):
+
+    #Outchannels=1, because the problem statement is for the Binary Image segmentation
+    def __init__(self, in_channels=3, out_channels=1, features=[64, 128, 256, 512]):
+        super(UNET, self).__init__()
+        
+        self.ups = nn.ModuleList() #This will be storing all the convolutional layers
+        self.downs = nn.ModuleList() #This will be storing all the convolutional layers
+
+        #Max pooling layer
+        self.pool = nn.MaxPool2d(kernel_size=2, stride=2)
+
+        #Downpart of UAE
+        for feature in features:
+            self.downs.append(DoubleConv(in_channels=in_channels, out_channels=feature))
+            in_channels = feature
+        
+        

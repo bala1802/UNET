@@ -40,9 +40,21 @@ class UNET(nn.Module):
         #Max pooling layer
         self.pool = nn.MaxPool2d(kernel_size=2, stride=2)
 
-        #Downpart of UAE
+        #Downpart of UNET
         for feature in features:
             self.downs.append(DoubleConv(in_channels=in_channels, out_channels=feature))
             in_channels = feature
         
+        #Up part of UNET
+        for feature in reversed(features):
+            self.ups.append(
+                nn.ConvTranspose2d(in_channels=feature*2, out_channels=feature, kernel_size=2, stride=2)
+            )
+            self.ups.append(DoubleConv(in_channels=feature*2, out_channels=feature))
         
+        #features[-1] because the end layer 512 in converted to 1024
+        self.bottleneck = DoubleConv(in_channels=features[-1], out_channels=features[-1]*2)
+        self.final_conv = nn.Conv2d(in_channels=features[-1], out_channels=out_channels, kernel_size=1)
+
+        
+

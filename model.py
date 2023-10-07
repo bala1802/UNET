@@ -55,7 +55,7 @@ class UNET(nn.Module):
         #features[-1] because the end layer 512 in converted to 1024
         self.bottleneck = DoubleConv(in_channels=features[-1], out_channels=features[-1]*2)
         #Final Conv is the 1x1 convolutional layer at the end
-        self.final_conv = nn.Conv2d(in_channels=features[-1], out_channels=out_channels, kernel_size=1)
+        self.final_conv = nn.Conv2d(in_channels=features[0], out_channels=out_channels, kernel_size=1)
     
     def forward(self, x):
         skip_connections = []

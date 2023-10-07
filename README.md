@@ -116,10 +116,16 @@ To address this challenge, the U-Net paper suggests using a `weighted loss` in t
 
 ![Alt text](image-4.png)
 
-
 By using this weighted loss, the U-Net model pays special attention to the challenging areas where objects touch (boundary between two different objects), making it more likely to produce a better segmentation result in these complex cases.
 
 ## Loss Functions in UNET
-### Binary Cross Entropy With Logits
-### Dice Loss
-### Weighted Loss
+
+Two different loss functions are used in the U-Net Image segmentation architecture
+
+- `Binary Cross-Entropy (BCE) Loss`: In Binary image segmentation, each pixel in the mask can be either a foreground(object) pixel or a background pixel. This loss function measures the dissimilarity between the predicted binary mask and the ground truth binary mask. This enables the model to produce pixel-wise probabilities that are close to the actual binary values (0 or 1).
+
+- `Dice Loss`: This loss function measures the overlap between the predicted and ground truth masks, focusing on the intersection of pixels. It enables the model to generate masks that closely match the ground truth.
+
+                Dice = (2 * Intersection) / (Sum of Pixels in Ground Truth + Sum of Pixels in Predicted)
+                Dice = (2 * 2) / (4 + 2) = 4 / 6 = 2/3 ≈ 0.67
+                Dice Loss = 1-0.67 = 0.33

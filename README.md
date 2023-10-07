@@ -114,7 +114,7 @@ When two cells touch, the boundary between them becomes ambiguous, and it's chal
 
 To address this challenge, the U-Net paper suggests using a `weighted loss` in the training process. In this case, the `weighted loss` function assigns different levels of importance or `weights` to different parts of the image.
 
-![Alt text](image-3.png)
+![Alt text](image-4.png)
 
 
 By using this weighted loss, the U-Net model pays special attention to the challenging areas where objects touch (boundary between two different objects), making it more likely to produce a better segmentation result in these complex cases.

@@ -29,12 +29,20 @@ The U-Net architecture can be divided into two main parts: `Encoder` and `Decode
 
 ##### Code:
 
-- Encoder Initialization:
+- Initialization:
                 
-                #Downpart of UNET
                 for feature in features:
                     self.downs.append(DoubleConv(in_channels=in_channels, out_channels=feature))
                     in_channels = feature
+
+The `DoubleConv` is just two sequential convolutional layers. As mentioned in the figure, the convolutional layers' features ranges `64, 128, 256, 512`.
+
+- Implementation: 
+
+                for down in self.downs:
+                    x = down(x)
+                    skip_connections.append(x)
+                    x = self.pool(x)
 
 
 #### Decoder

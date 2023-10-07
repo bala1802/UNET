@@ -44,6 +44,7 @@ The `DoubleConv` is just two sequential convolutional layers. As mentioned in th
                     skip_connections.append(x)
                     x = self.pool(x)
 
+The `Double Convoltion` runs and the results are stored in `skip_connections` which is discussed in `Skip Connections` section
 
 #### Decoder
 - The Decoder is the bottom part of the `U` shape and designed to expand the feature maps back to the original image size while preserving the important features learned by the Encoder.
@@ -55,8 +56,35 @@ The `DoubleConv` is just two sequential convolutional layers. As mentioned in th
     - The `WHERE` part is resolved in the Expansion Path. The decoder takes the features learned in the contraction path and gradually upsamples them to match the original image's size. Skip connections, which connect corresponding layers in the encoder and decoder, provide "valuable information" about the location of features.
     - Example: In the Expansion Path, the model uses the information it learned earlier "Cat's ears", and places them in the right location on the image, so it knows `WHERE` those features are.
 
+##### Code
 
-#### Skip Connections
+- Initialization
+
+            for feature in reversed(features):
+                self.ups.append(nn.ConvTranspose2d(in_channels=feature*2, out_channels=feature, kernel_size=2, stride=2))
+                self.ups.append(DoubleConv(in_channels=feature*2, out_channels=feature))
+
+The `Transposed Convolution (ConvTranspose2d)` is used to upsample or increase the spatial dimensions of the input data. Followed by that `DoubleConv` sequentially two convolutional layers are added
+
+- Implementation
+
+            for idx in range(0, len(self.ups), 2):
+                x = self.ups[idx](x)
+                skip_connection = skip_connections[idx//2]
+
+                if x.shape != skip_connection.shape:
+                    x = TF.resize(x, size=skip_connection.shape[2:])
+                
+                concat_skip = torch.cat((skip_connection, x), dim=1)
+                x = self.ups[idx+1](concat_skip)
+
+The `Transposed Convolution` layer is added to the `Skip Connection` which directly comes from the Encoder. Thisis discussed in `Skip Connections` section. Followed by that, two convolutional layers are executed sequentially.
+
+#### Skip Connection
+
+To retain the spatial information from the Encoder and send it to the Decoder, the skip connection is used, which is nothing bu the bridge we can see between the `Encoder` and the `Decoder`. This bridge catties the spatial (width, height) information.
+
+
 #### Output Layer
 #### What and Where Learning, followed by
 #### How U-Net Addresses these issues

@@ -28,7 +28,14 @@ The U-Net architecture can be divided into two main parts: `Encoder` and `Decode
     - Example: When we look at the image of the cat, in the Encoder, the model learns `WHAT` features make up a cat, such as the shapes of ears, the fur texture, and the eyes. But it doesn't precisely know `WHERE` these features are in the original image becuase it has been reduced to lower-resolution feature maps.
 
 #### Decoder
-- The Decoder is the 
+- The Decoder is the bottom part of the `U` shape and designed to expand the feature maps back to the original image size while preserving the important features learned by the Encoder.
+- It consists of a series of upsampling and convolutional layers.
+- The upsampling layers increase the spatial dimensions, making the feature maps larger.
+- The convolutional layers combine the high-level features from the encoder with the upsampled feature maps to generate the final segmentation mask.
+- The Decoder is a **Expansion Path**
+    - In the expansion path, the model's goal is to figure out `WHAT` those features from the Contraction Path mean in the context of the whole image. It reconstructs the spatial information.
+    - The `WHERE` part is resolved in the Expansion Path. The decoder takes the features learned in the contraction path and gradually upsamples them to match the original image's size. Skip connections, which connect corresponding layers in the encoder and decoder, provide "valuable information" about the location of features.
+    - Example: In the Expansion Path, the model uses the information it learned earlier "Cat's ears", and places them in the right location on the image, so it knows `WHERE` those features are.
 
 
 #### Skip Connections

@@ -84,6 +84,13 @@ The `Transposed Convolution` layer is added to the `Skip Connection` which direc
 
 To retain the spatial information from the Encoder and send it to the Decoder, the skip connection is used, which is nothing bu the bridge we can see between the `Encoder` and the `Decoder`. This bridge catties the spatial (width, height) information.
 
+#### Bottle Neck Layer
+
+The Layer which connects between the `Encoder` and the `Decoder`.
+
+![Alt text](image.png)
+
+The End layer of the `Encoder` with feature size as `512` is converted to `1024` in `Decoder` (this is where the Decoder begins)
 
 #### Output Layer
 #### What and Where Learning, followed by

@@ -21,14 +21,16 @@ The U-Net architecture can be divided into two main parts: `Encoder` and `Decode
 
 #### Encoder
 - The Encoder is the top part of the `U` shape designed to capture features from the input image and gradually reduces the spatial dimension
-- It is a series of convolutional layers that work like a funnel, detecting simple features at the top and more complex features as we go deeper in the network. These layers reduces the spatial resolution, while increasing the number of channels.
+- It is a series of convolutional layers that work like a funnel, detecting simple features at the top and more complex features as we go deeper in the network. These layers reduces the spatial resolution (`width` and `height`), while increasing the number of channels.
 - The Encoder is a **Contraction Path**
-    - TODO
-    - TODO
-
-
+    - In the Contraction Path, the model learns `WHAT` features are present in the image. These features can be basic patterns, edges, textures or more complex structures
+    - However in this path, we lose some of the spatial information about `WHERE` in the image these features are located, since the spatial dimensions (`width` and `height`) of the feature maps are reduced as we move deeper into the Encoder.
+    - Example: When we look at the image of the cat, in the Encoder, the model learns `WHAT` features make up a cat, such as the shapes of ears, the fur texture, and the eyes. But it doesn't precisely know `WHERE` these features are in the original image becuase it has been reduced to lower-resolution feature maps.
 
 #### Decoder
+- The Decoder is the 
+
+
 #### Skip Connections
 #### Output Layer
 #### What and Where Learning, followed by

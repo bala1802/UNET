@@ -27,6 +27,15 @@ The U-Net architecture can be divided into two main parts: `Encoder` and `Decode
     - However in this path, we lose some of the spatial information about `WHERE` in the image these features are located, since the spatial dimensions (`width` and `height`) of the feature maps are reduced as we move deeper into the Encoder.
     - Example: When we look at the image of the cat, in the Encoder, the model learns `WHAT` features make up a cat, such as the shapes of ears, the fur texture, and the eyes. But it doesn't precisely know `WHERE` these features are in the original image becuase it has been reduced to lower-resolution feature maps.
 
+##### Code:
+
+- Encoder Initialization:
+                #Downpart of UNET
+                for feature in features:
+                    self.downs.append(DoubleConv(in_channels=in_channels, out_channels=feature))
+                    in_channels = feature
+
+
 #### Decoder
 - The Decoder is the bottom part of the `U` shape and designed to expand the feature maps back to the original image size while preserving the important features learned by the Encoder.
 - It consists of a series of upsampling and convolutional layers.

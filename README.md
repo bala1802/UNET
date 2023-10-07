@@ -86,15 +86,29 @@ To retain the spatial information from the Encoder and send it to the Decoder, t
 
 #### Bottle Neck Layer
 
-The Layer which connects between the `Encoder` and the `Decoder`.
+The Layer which connects between the `Encoder` and the `Decoder`. Bottle Neck layer is applied at the end of the Encoder.
 
 ![Alt text](image.png)
 
 The End layer of the `Encoder` with feature size as `512` is converted to `1024` in `Decoder` (this is where the Decoder begins)
 
 #### Output Layer
-#### What and Where Learning, followed by
-#### How U-Net Addresses these issues
+
+This is the Final Convolutional Layer, which is responsbile for converting the features from `64` to the output channels = 1. Because, the output will be `background in Black` and the `segmented object in white` color.
+
+                self.final_conv = nn.Conv2d(in_channels=features[0], out_channels=out_channels, kernel_size=1)
+
+### Weighted Loss
+
+Let's understand the `weighted loss` based on the statements mentioned in the paper.
+
+![Alt text](image-1.png)
+
+A technique used to train the U-Net model more effectively when dealing with the problem of segmenting objects that are very close to each other, like cells in a microscopy image.
+
+![Alt text](image-2.png)
+
+
 
 ## Loss Functions in UNET
 ### Binary Cross Entropy With Logits

@@ -30,10 +30,10 @@ The U-Net architecture can be divided into two main parts: `Encoder` and `Decode
 ##### Code:
 
 - Encoder Initialization:
-                #Downpart of UNET
+                `#Downpart of UNET
                 for feature in features:
                     self.downs.append(DoubleConv(in_channels=in_channels, out_channels=feature))
-                    in_channels = feature
+                    in_channels = feature`
 
 
 #### Decoder
